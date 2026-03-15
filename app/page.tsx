@@ -227,6 +227,31 @@ export default function Home() {
     { label: "Gallery", href: "#gallery" },
     { label: "Contact", href: "#contact" },
   ];
+  const textBlockVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.12,
+      },
+    },
+  };
+  
+  const textRevealVariants = {
+    hidden: {
+      opacity: 0,
+      y: 26,
+      filter: "blur(8px)",
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.75,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -566,38 +591,63 @@ export default function Home() {
         <section id="menu" className="bg-[#fdf1f4] px-6 py-20 md:py-24">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-sm uppercase tracking-[0.28em] text-[#c88998]">
+              <motion.div
+                className="max-w-2xl"
+                variants={textBlockVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.25 }}
+              >
+                <motion.p
+                  variants={textRevealVariants}
+                  className="text-sm uppercase tracking-[0.28em] text-[#c88998]"
+                >
                   Our Menu
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold md:text-5xl">
+                </motion.p>
+
+                <motion.h2
+                  variants={textRevealVariants}
+                  className="mt-3 text-3xl font-semibold md:text-5xl"
+                >
                   A menu worth taking your time with
-                </h2>
-                <p className="mt-4 text-base leading-8 text-[#6b5559] md:text-lg">
+                </motion.h2>
+
+                <motion.p
+                  variants={textRevealVariants}
+                  className="mt-4 text-base leading-8 text-[#6b5559] md:text-lg"
+                >
                   From satisfying meals to refreshing drinks, cakes, and sweet
                   treats, Mikos brings together comfort, presentation, and
                   flavor in one menu experience.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <a
+              <motion.div
+                className="flex flex-col gap-3 sm:flex-row"
+                variants={textBlockVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.25 }}
+              >
+                <motion.a
+                  variants={textRevealVariants}
                   href="/menu/mikos-full-menu.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="rounded-full bg-[#2f2323] px-6 py-3 text-center text-white transition hover:opacity-90"
                 >
                   Open Full Menu
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
+                  variants={textRevealVariants}
                   href="/menu/mikos-full-menu.pdf"
                   download
                   className="rounded-full border border-[#d9b2bc] px-6 py-3 text-center transition hover:bg-[#f9e8ed]"
                 >
                   Download Menu
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
@@ -614,9 +664,17 @@ export default function Home() {
                   title: "Desserts & Cakes",
                   image: "/menu/menu-preview-3.jpg",
                 },
-              ].map((item) => (
-                <div
+              ].map((item, index) => (
+                <motion.div
                   key={item.title}
+                  initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: index * 0.12,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   className="group overflow-hidden rounded-4xl border border-[#f0d7de] bg-white shadow-sm"
                 >
                   <div className="relative">
@@ -631,16 +689,22 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            <div className="mt-8 rounded-3xl bg-[#fdf1f4] p-6 md:p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 rounded-3xl bg-[#fdf1f4] p-6 md:p-8"
+            >
               <p className="text-sm leading-7 text-[#6b5559] md:text-base">
                 Prefer the full version? Open the complete Mikos menu as a PDF
                 for a better view of all items, categories, and pricing.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -661,8 +725,14 @@ export default function Home() {
             <Sparkle className="right-[24%] bottom-[12%]" delay={1.1} size="sm" />
           </div>
 
-          <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="relative">
+          <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+            <motion.div
+              initial={{ opacity: 0, x: -40, y: 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+              className="relative"
+            >
               <div className="absolute -left-4 -top-4 h-24 w-24 rounded-full bg-[#f6d4dc] blur-2xl opacity-70" />
               <div className="absolute -bottom-6 right-10 h-28 w-28 rounded-full bg-[#f3e8dc] blur-2xl opacity-70" />
 
@@ -677,40 +747,78 @@ export default function Home() {
                   preload="auto"
                 />
 
-                <div className="absolute bottom-5 left-5 rounded-2xl border border-white/40 bg-white/85 px-4 py-3 backdrop-blur-md">
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{
+                    duration: 0.65,
+                    delay: 0.25,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="absolute bottom-5 left-5 rounded-2xl border border-white/40 bg-white/85 px-4 py-3 backdrop-blur-md"
+                >
                   <p className="text-xs uppercase tracking-[0.22em] text-[#c88998]">
                     Mikos Atmosphere
                   </p>
                   <p className="mt-1 text-sm font-medium text-[#2f2323]">
                     Warm meals • Sweet moments
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="max-w-xl">
-              <p className="text-sm uppercase tracking-[0.28em] text-[#c88998]">
+            <motion.div
+              className="max-w-xl"
+              variants={textBlockVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+            >
+              <motion.p
+                variants={textRevealVariants}
+                className="text-sm uppercase tracking-[0.28em] text-[#c88998]"
+              >
                 About Mikos
-              </p>
+              </motion.p>
 
-              <h2 className="mt-4 text-4xl leading-[1.05] md:text-6xl">
+              <motion.h2
+                variants={textRevealVariants}
+                className="mt-4 text-4xl leading-[1.05] md:text-6xl"
+              >
                 A place where flavor, comfort, and atmosphere meet
-              </h2>
+              </motion.h2>
 
-              <p className="mt-6 text-lg leading-8 text-[#6b5559]">
+              <motion.p
+                variants={textRevealVariants}
+                className="mt-6 text-lg leading-8 text-[#6b5559]"
+              >
                 Mikos is designed for people who want more than just a meal. It
                 is for birthdays, soft dates, coffee catch-ups, dessert runs,
                 and the kind of food moments you want to post before you even
                 take the first bite.
-              </p>
+              </motion.p>
 
-              <p className="mt-5 text-base leading-8 text-[#6b5559]">
+              <motion.p
+                variants={textRevealVariants}
+                className="mt-5 text-base leading-8 text-[#6b5559]"
+              >
                 From hearty meals to cakes, drinks, and sweet treats, the
                 experience is meant to feel warm, polished, and memorable.
-              </p>
+              </motion.p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-3xl border border-[#efd8de] bg-white/70 p-5 backdrop-blur-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.15,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="rounded-3xl border border-[#efd8de] bg-white/70 p-5 backdrop-blur-sm"
+                >
                   <p className="text-sm uppercase tracking-[0.18em] text-[#c88998]">
                     Experience
                   </p>
@@ -718,9 +826,19 @@ export default function Home() {
                     A stylish dine-in setting shaped around comfort, desserts,
                     and shareable moments.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="rounded-3xl border border-[#efd8de] bg-white/70 p-5 backdrop-blur-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.28,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="rounded-3xl border border-[#efd8de] bg-white/70 p-5 backdrop-blur-sm"
+                >
                   <p className="text-sm uppercase tracking-[0.18em] text-[#c88998]">
                     Signature Feel
                   </p>
@@ -728,9 +846,9 @@ export default function Home() {
                     Soft pink branding, memorable plating, warm hospitality, and
                     a modern social atmosphere.
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -755,22 +873,53 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-              <div>
-                <p className="text-sm uppercase tracking-[0.28em] text-[#c88998]">
+              <motion.div
+                variants={textBlockVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.25 }}
+              >
+                <motion.p
+                  variants={textRevealVariants}
+                  className="text-sm uppercase tracking-[0.28em] text-[#c88998]"
+                >
                   Featured Picks
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold md:text-5xl">
+                </motion.p>
+
+                <motion.h2
+                  variants={textRevealVariants}
+                  className="mt-3 text-3xl font-semibold md:text-5xl"
+                >
                   Signature favorites from Mikos
-                </h2>
-              </div>
-              <a href="#contact" className="text-sm font-medium text-[#d97c93]">
+                </motion.h2>
+              </motion.div>
+
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                href="#contact"
+                className="text-sm font-medium text-[#d97c93]"
+              >
                 Visit us →
-              </a>
+              </motion.a>
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
               {featuredItems.map((item, index) => (
-                <div key={item.title} className="group relative">
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 36, scale: 0.98 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.18 }}
+                  transition={{
+                    duration: 0.75,
+                    delay: index * 0.12,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="group relative"
+                >
                   <div className="pointer-events-none absolute -inset-2 rounded-[2.2rem] bg-linear-to-br from-[#f7d6df]/40 via-transparent to-[#f3e6dc]/40 opacity-0 blur-2xl transition duration-500 group-hover:opacity-100" />
 
                   <div className="relative overflow-hidden rounded-4xl border border-[#efd6dd] bg-[#fff7f8]/70 shadow-[0_16px_45px_rgba(47,35,35,0.08)] backdrop-blur-sm transition duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_24px_60px_rgba(47,35,35,0.14)]">
@@ -782,20 +931,50 @@ export default function Home() {
 
                       <div className="absolute inset-0 bg-linear-to-t from-[#2f2323]/45 via-[#2f2323]/8 to-transparent" />
 
-                      <div className="absolute left-5 top-5">
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: 0.55,
+                          delay: 0.18 + index * 0.08,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="absolute left-5 top-5"
+                      >
                         <span className="rounded-full border border-white/30 bg-white/15 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white backdrop-blur-md">
                           Mikos Pick
                         </span>
-                      </div>
+                      </motion.div>
 
-                      <div className="absolute bottom-5 left-5 right-5">
+                      <motion.div
+                        initial={{ opacity: 0, y: 18 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{
+                          duration: 0.65,
+                          delay: 0.24 + index * 0.08,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="absolute bottom-5 left-5 right-5"
+                      >
                         <h3 className="max-w-56 text-2xl font-semibold leading-tight text-white drop-shadow-sm">
                           {item.title}
                         </h3>
-                      </div>
+                      </motion.div>
                     </div>
 
-                    <div className="relative p-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{
+                        duration: 0.65,
+                        delay: 0.3 + index * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="relative p-6"
+                    >
                       <div className="mb-4 flex items-center justify-between">
                         <div className="h-[2px] w-12 rounded-full bg-[#d97c93]" />
                         <span className="text-xs uppercase tracking-[0.22em] text-[#c88998]">
@@ -806,9 +985,9 @@ export default function Home() {
                       <p className="text-sm leading-7 text-[#6b5559]">
                         {item.desc}
                       </p>
-                    </div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -816,39 +995,62 @@ export default function Home() {
 
         {/* Gallery */}
         <section
-            id="gallery"
-            className="relative overflow-hidden bg-[#fffaf8] px-6 py-24 md:py-28"
-          >
-            <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-              <GlowOrb className="left-[4%] top-[8%] h-88 w-88 bg-[#f8d4df]/36" />
-              <GlowOrb className="right-[6%] top-[16%] h-80 w-[20rem] bg-[#f5bfd0]/28" />
-              <GlowOrb className="left-[16%] bottom-[6%] h-64 w-[16rem] bg-[#ffdbe8]/24" />
-              <GlowOrb className="right-[12%] bottom-[10%] h-80 w-[20rem] bg-[#f9d8e2]/24" />
-              <GlowOrb className="left-[44%] top-[24%] h-48 w-48 bg-[#f7c7d5]/14" />
+          id="gallery"
+          className="relative overflow-hidden bg-[#fffaf8] px-6 py-24 md:py-28"
+        >
+          <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+            <GlowOrb className="left-[4%] top-[8%] h-88 w-88 bg-[#f8d4df]/36" />
+            <GlowOrb className="right-[6%] top-[16%] h-80 w-[20rem] bg-[#f5bfd0]/28" />
+            <GlowOrb className="left-[16%] bottom-[6%] h-64 w-[16rem] bg-[#ffdbe8]/24" />
+            <GlowOrb className="right-[12%] bottom-[10%] h-80 w-[20rem] bg-[#f9d8e2]/24" />
+            <GlowOrb className="left-[44%] top-[24%] h-48 w-48 bg-[#f7c7d5]/14" />
 
-              <Sparkle className="left-[12%] top-[18%]" delay={0.5} size="sm" />
-              <Sparkle className="right-[18%] top-[20%]" delay={1.4} size="md" />
-              <Sparkle className="left-[28%] bottom-[16%]" delay={2} size="sm" />
-              <Sparkle className="right-[10%] bottom-[18%]" delay={1.1} size="md" />
-              <Sparkle className="left-[48%] top-[12%]" delay={2.4} size="sm" />
-            </div>
+            <Sparkle className="left-[12%] top-[18%]" delay={0.5} size="sm" />
+            <Sparkle className="right-[18%] top-[20%]" delay={1.4} size="md" />
+            <Sparkle className="left-[28%] bottom-[16%]" delay={2} size="sm" />
+            <Sparkle className="right-[10%] bottom-[18%]" delay={1.1} size="md" />
+            <Sparkle className="left-[48%] top-[12%]" delay={2.4} size="sm" />
+          </div>
 
           <div className="relative z-10 mx-auto max-w-7xl">
-            <div className="mb-12 text-center">
-              <p className="text-sm uppercase tracking-[0.28em] text-[#c88998]">
+            <motion.div
+              className="mb-12 text-center"
+              variants={textBlockVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+            >
+              <motion.p
+                variants={textRevealVariants}
+                className="text-sm uppercase tracking-[0.28em] text-[#c88998]"
+              >
                 Gallery
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold md:text-5xl">
+              </motion.p>
+
+              <motion.h2
+                variants={textRevealVariants}
+                className="mt-3 text-3xl font-semibold md:text-5xl"
+              >
                 The Mikos look and feel
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5559] md:text-lg">
+              </motion.h2>
+
+              <motion.p
+                variants={textRevealVariants}
+                className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[#6b5559] md:text-lg"
+              >
                 Explore Mikos through meals, desserts, drinks, cakes, and the
                 moments that make the space feel memorable.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
             <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="relative mx-auto w-full max-w-[780px]">
+              <motion.div
+                initial={{ opacity: 0, x: -36, y: 18 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+                className="relative mx-auto w-full max-w-[780px]"
+              >
                 <div className="relative h-[520px] sm:h-[580px]">
                   {previewSlides
                     .slice()
@@ -858,9 +1060,17 @@ export default function Home() {
                       const isTopPreview = stackLevel === 1;
 
                       return (
-                        <button
+                        <motion.button
                           key={`${slide.image}-${index}`}
                           type="button"
+                          initial={{ opacity: 0, x: -20, y: 20, scale: 0.96 }}
+                          whileInView={{ opacity: 0.92, x: 0, y: 0, scale: 1 }}
+                          viewport={{ once: true, amount: 0.2 }}
+                          transition={{
+                            duration: 0.7,
+                            delay: index * 0.1,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
                           onClick={() =>
                             setActiveGalleryIndex(
                               gallerySlides.findIndex(
@@ -878,7 +1088,6 @@ export default function Home() {
                               1 - stackLevel * 0.02
                             })`,
                             zIndex: stackLevel,
-                            opacity: 0.92,
                           }}
                           aria-label={`Open ${slide.title}`}
                         >
@@ -892,7 +1101,7 @@ export default function Home() {
                             />
                           </div>
                           <div className="absolute inset-0 bg-linear-to-t from-[#2f2323]/20 via-transparent to-transparent" />
-                        </button>
+                        </motion.button>
                       );
                     })}
 
@@ -916,13 +1125,28 @@ export default function Home() {
 
                     <div className="absolute inset-0 bg-linear-to-t from-[#2f2323]/20 via-transparent to-transparent" />
 
-                    <div className="absolute right-6 top-5 rounded-full bg-[#fffaf8]/90 px-4 py-1 text-sm font-medium text-[#d97c93] backdrop-blur-sm">
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.15,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="absolute right-6 top-5 rounded-full bg-[#fffaf8]/90 px-4 py-1 text-sm font-medium text-[#d97c93] backdrop-blur-sm"
+                    >
                       Mikos
-                    </div>
+                    </motion.div>
                   </motion.div>
                 </div>
 
-                <div className="mt-8 flex items-center justify-center gap-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-8 flex items-center justify-center gap-3"
+                >
                   <button
                     type="button"
                     onClick={goToPrevGallery}
@@ -940,17 +1164,22 @@ export default function Home() {
                   >
                     <span className="text-2xl leading-none">→</span>
                   </button>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               <motion.div
                 key={activeSlide.title}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, x: 28, y: 18 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="mx-auto max-w-xl text-center lg:text-left"
               >
-                <div className="mb-8 flex justify-center lg:justify-start">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="mb-8 flex justify-center lg:justify-start"
+                >
                   <div className="flex h-40 w-40 items-center justify-center rounded-full border-2 border-[#d9b2bc] text-[#d97c93]">
                     <div className="text-center">
                       <p className="text-sm uppercase tracking-[0.22em]">
@@ -959,21 +1188,41 @@ export default function Home() {
                       <p className="mt-2 text-2xl font-semibold">Mikos</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <p className="text-sm uppercase tracking-[0.28em] text-[#c88998]">
+                <motion.p
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-sm uppercase tracking-[0.28em] text-[#c88998]"
+                >
                   {activeSlide.category}
-                </p>
+                </motion.p>
 
-                <h3 className="mt-4 text-3xl font-semibold uppercase leading-tight text-[#d97c93] md:text-5xl">
+                <motion.h3
+                  initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-4 text-3xl font-semibold uppercase leading-tight text-[#d97c93] md:text-5xl"
+                >
                   {activeSlide.title}
-                </h3>
+                </motion.h3>
 
-                <p className="mt-6 text-base leading-8 text-[#6b5559] md:text-lg">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-6 text-base leading-8 text-[#6b5559] md:text-lg"
+                >
                   {activeSlide.description}
-                </p>
+                </motion.p>
 
-                <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start"
+                >
                   {gallerySlides.map((slide, index) => {
                     const isActive = index === activeGalleryIndex;
 
@@ -992,7 +1241,7 @@ export default function Home() {
                       </button>
                     );
                   })}
-                </div>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -1040,11 +1289,16 @@ export default function Home() {
                 </div>
 
                 <div className="rounded-3xl bg-white/5 p-6">
-                  <h3 className="text-lg font-semibold">Instagram</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/70">
-                  <a href="https://www.instagram.com/mikos_bt/" target="_blank" rel="noopener noreferrer">https://www.instagram.com/mikos_bt/</a>
-                  </p>
-                </div>
+                <h3 className="text-lg font-semibold">Instagram</h3>
+                <a
+                  href="https://www.instagram.com/mikos_bt/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 block text-sm leading-7 text-white/70 transition hover:text-white"
+                >
+                  @mikos_bt
+                </a>
+              </div>
               </div>
             </div>
           </div>
